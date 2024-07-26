@@ -5,9 +5,13 @@ import { Button } from "../../components/button";
 interface ConfirmTripModalProps {
     closeConfirmModal: () => void
     createTrip: (event: FormEvent<HTMLFormElement>) => void
+    setOwnerName: (ownerName: string) => void
+    setOwnerEmail: (ownerEmail: string) => void
 }
 
 export function ConfirmTripModal({
+    setOwnerName,
+    setOwnerEmail,
     closeConfirmModal,
     createTrip }: ConfirmTripModalProps) {
     return (
@@ -28,12 +32,12 @@ export function ConfirmTripModal({
                 <form onSubmit={createTrip} className="space-y-3">
                     <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
                         <User className="text-zinc-400 size-5" />
-                        <input name="name" type="text" placeholder="Seu nome completo" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" />
+                        <input name="name" onChange={(event) => setOwnerName(event.target.value)} type="text" placeholder="Seu nome completo" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" />
                     </div>
 
                     <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
                         <User className="text-zinc-400 size-5" />
-                        <input name="email" type="email" placeholder="Seu e-mail pessoal" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" />
+                        <input name="email" onChange={(event) => setOwnerEmail(event.target.value)} type="email" placeholder="Seu e-mail pessoal" className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" />
                     </div>
 
                     <Button type="submit" size="full" >
