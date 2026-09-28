@@ -70,19 +70,14 @@ export function CreateTripPage() {
   async function createTrip(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    console.log(destination)
-    console.log(eventDateRange)
-    console.log(emailsToInvite)
-    console.log(ownerName)
-    console.log(ownerEmail)
+    const isValid = destination &&
+      eventDateRange?.from &&
+      eventDateRange?.to &&
+      emailsToInvite.length > 0 &&
+      ownerName &&
+      ownerEmail;
 
-    if (!destination) return
-
-    if (!eventDateRange?.from || !eventDateRange?.to) return
-
-    if (emailsToInvite.length === 0) return
-
-    if (!ownerName || !ownerEmail) return
+    if (!isValid) return;
 
     const response = await api.post("/trips", {
       destination,
@@ -95,7 +90,7 @@ export function CreateTripPage() {
 
     const { tripId } = response.data;
 
-    navigate(`/trips/${tripId}`)
+    navigate(`/trips/${tripId}`);
   }
 
   return (
