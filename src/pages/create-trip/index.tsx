@@ -67,17 +67,19 @@ export function CreateTripPage() {
     setEmailsToInvite(newEmailList)
   }
 
+  function validateTripForm(): boolean {
+    const hasDestination = Boolean(destination);
+    const hasDateRange = Boolean(eventDateRange?.from && eventDateRange?.to);
+    const hasGuests = emailsToInvite.length > 0;
+    const hasOwnerInfo = Boolean(ownerName && ownerEmail);
+
+    return hasDestination && hasDateRange && hasGuests && hasOwnerInfo;
+  }
+
   async function createTrip(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const isValid = destination &&
-      eventDateRange?.from &&
-      eventDateRange?.to &&
-      emailsToInvite.length > 0 &&
-      ownerName &&
-      ownerEmail;
-
-    if (!isValid) return;
+    if (!validateTripForm()) return;
 
     const response = await api.post("/trips", {
       destination,
